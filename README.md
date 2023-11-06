@@ -23,10 +23,8 @@ source ~/ML/bin/activate
 ![ml_ex2](images/ml_ex2.png)
 ![ml_ex3](images/ml_ex3.png)
 
-##### 처음 생성한 branch 경우
+##### main 코드 branch로 가져오기
 git pull origin main 진행
-##### 아닌 경우
-git pull 진행
 
 #### vscode실행
 code .
