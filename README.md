@@ -1,7 +1,7 @@
 # code_Machine-learning
 프로젝트 머신 러닝 코드 repo
 
-##START
+## START
 #### linux와 git이 연결되어있지 않는 경우
 git clone git@github.com:team-i-Five/code_Machine-learning.git
 cd code_Machine-learning
