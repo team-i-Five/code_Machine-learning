@@ -1,5 +1,5 @@
 # code_Machine-learning
-프로젝트 머신 러닝 코드 repo
+프로젝트 머신러닝 코드 repo
 
 ## START
 #### linux와 git이 연결되어있지 않는 경우
