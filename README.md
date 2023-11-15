@@ -2,10 +2,17 @@
 프로젝트 머신러닝 코드 repo
 
 ## 추천 과정
-**1. 사용자가 tag 3개를 선택하면 전체 데이터(train)에서 필터링된 데이터 보여줌(20개)**\
-→ 50개 이상이면 최신순으로 20개 보여줌
+### 1. 처음 뮤지컬을 접한 사용자
+**1) 사용자가 tag 3개를 선택하면 전체 데이터(train)에서 필터링된 데이터 보여줌(50개)**\
+→ 최신순으로 50개 보여줌
 
-**2. 필터링된 50개의 데이터(train) 중에 사용자가 작품을 선택하면 해당 작품과 유사도가 높은 현재 상영중인 작품(present) 추천**\
+**2) 필터링된 50개의 데이터(train) 중에 사용자가 작품을 선택하면 해당 작품과 유사도가 높은 현재 상영중인 작품(present) 추천**\
+→ 즉, train데이터와 present데이터 줄거리 간의 유사도를 측정해서 추천
+
+### 2. 뮤지컬을 한 번 이상 본 사용자
+**1) 랭킹순으로 유명한 작품을 먼저 보여주고, 사용자가 봤던 작품 하나를 선택**\
+
+**2) 선택한 작품과 유사도가 높은 현재 상영중인 작품(present) 추천**\
 → 즉, train데이터와 present데이터 줄거리 간의 유사도를 측정해서 추천
 
 ----
@@ -15,13 +22,15 @@
 `Data0_train.csv` : 원본 학습 데이터\
 `Data1_cleaned_data.csv` : train.csv의 특수문자 및 HTML 엔터티 코드 제거한 데이터\
 `Data2_past_vector.csv` : 날짜 처리 및 시놉시스 벡터 컬럼 추가된 데이터\
-`Data3_vector_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터
+`Data3_vector_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터\
+`Data4_train_nan.csv` :  tag가 없는 값 모두 삭제, synopsis_numpy, synopsis_numpy_scale 컬럼 추가된 데이터(최종 완성된 데이터)
 
 - **present_data**\
 `Data0_present.csv` : 원본 학습 데이터\
 `Data1_cleaned_present.csv` : train.csv의 특수문자 및 HTML 엔터티 코드 제거한 데이터\
 `Data2_present_vector.csv` : 날짜 처리 및 시놉시스 벡터 컬럼 추가된 데이터\
-`Data3_present_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터
+`Data3_present_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터\
+`Data4_present_nan.csv` :  tag가 없는 값 모두 삭제, synopsis_numpy, synopsis_numpy_scale 컬럼 추가된 데이터(최종 완성된 데이터)
 
 ### DATA_PREPROCESSING
 - **train_data_preprocessing**\
