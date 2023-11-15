@@ -9,17 +9,21 @@
 → 즉, train데이터와 present데이터 줄거리 간의 유사도를 측정해서 추천
 
 ----
-## 파일명 정리
-`train.csv` : 과거 데이터 원본
-`cleaned_train` : train.csv의 특수문자 및 HTML 엔터티 코드 제거한 파일 
-1. **벡터화** : `train_synopsis_vector.ipynb`, `present_synopsis_vector.ipynb`
-   train_synopsis_vector.ipynb의 csv파일 : `past_vector.csv` (날짜 처리 및 시놉시스 벡터 컬럼 추가됨)
-   present_synopsis_vecto.ipynbr의 csv파일 : `present_vector.csv`  
-3. **tag** : `train_tag`, `present_tag`
+## 파일명
+### DATA
+- **train_data**\
+`Data0_train.csv` : 원본 학습 데이터\
+`Data1_cleaned_data.csv` : train.csv의 특수문자 및 HTML 엔터티 코드 제거한 데이터\
+`Data2_past_vector.csv` : 날짜 처리 및 시놉시스 벡터 컬럼 추가된 데이터\
+`Data3_vector_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터
+
+### DATA_PREPROCESSING
+1. **벡터화** : `train_synopsis_vector.ipynb`, `present_synopsis_vector.ipynb` \
+3. **tag** : `train_tag`, `present_tag`\
 4. **추천** : `content_musical.ipynb`
 
 ----
-## branch 정리
-`0.1.1`(민정) →  train 데이터 벡터화, tag
-`0.1.2`(수빈) → present 데이터 벡터화, tag
+## branch
+`0.1.1`(민정) → train 데이터 벡터화, tag \
+`0.1.2`(수빈) → present 데이터 벡터화, tag \
 `0.1.3`(민정) → model_test
