@@ -35,11 +35,13 @@
 ### DATA_PREPROCESSING
 - **train_data_preprocessing**\
 `train_synopsis_vector.ipynb` : 날짜 처리 및 시놉시스 벡터화 코드\
-`train_tag.ipynb` : tag 3개 붙이는 코드
+`train_tag.ipynb` : tag 3개 붙이는 코드\
+`train_nan.ipynb` : tag, 날짜처리, tag가 없는 값 모두 삭제, synopsis_numpy, synopsis_numpy_scale 컬럼 추가
 
 - **present_data_preprocessing**\
 `present_synopsis_vector.ipynb` : 날짜 처리 및 시놉시스 벡터화 코드\
-`present_tag.ipynb` : tag 3개 붙이는 코드
+`present_tag.ipynb` : tag 3개 붙이는 코드\
+`present_nan.ipynb` : tag, 날짜처리, tag가 없는 값 모두 삭제, synopsis_numpy, synopsis_numpy_scale 컬럼 추가
 
 ### MODEL
 - **model_test**\
