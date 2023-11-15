@@ -1,52 +1,25 @@
 # code_Machine-learning
 프로젝트 머신러닝 코드 repo
 
-## START
-#### linux와 git이 연결되어있지 않는 경우
-```bash
+## 추천 과정
+**1. 사용자가 tag 3개를 선택하면 전체 데이터(train)에서 필터링된 데이터 보여줌(20개)**
+→ 50개 이상이면 최신순으로 20개 보여줌
 
-$ git clone git@github.com:team-i-Five/code_Machine-learning.git
-$ cd code_Machine-learning
+**2. 필터링된 50개의 데이터(train) 중에 사용자가 작품을 선택하면 해당 작품과 유사도가 높은 현재 상영중인 작품(present) 추천**
+→ 즉, train데이터와 present데이터 줄거리 간의 유사도를 측정해서 추천
 
-# 폴더안에 .git이 없으면
-$ git init
+----
+## 파일명 정리
+`train.csv` : 과거 데이터 원본
+`cleaned_train` : train.csv의 특수문자 및 HTML 엔터티 코드 제거한 파일 
+1. **벡터화** : `train_synopsis_vector.ipynb`, `present_synopsis_vector.ipynb`
+   train_synopsis_vector.ipynb의 csv파일 : `past_vector.csv` (날짜 처리 및 시놉시스 벡터 컬럼 추가됨)
+   present_synopsis_vecto.ipynbr의 csv파일 : `present_vector.csv`  
+3. **tag** : `train_tag`, `present_tag`
+4. **추천** : `content_musical.ipynb`
 
-```
-
-
-#### 항상 변경사항이 있는지 확인하기 위해
-```bash
-
-$ git pull
-```
-
-##### 테스트를 진행할 branch 생성
-```bash
-
-$ git branch 버전명/브랜치명
-$ git checkout 생성한 버전명/브랜치명
-```
-![branch_ex](images/branch_ex.png)
-
-##### 가상환경 생성
-```bash
-
-$ mkdir ~/ML
-$ python3 -m venv ~/ML
-$ source ~/ML/bin/activate
-```
-![ml_ex1](images/ml_ex1.png)
-![ml_ex2](images/ml_ex2.png)
-![ml_ex3](images/ml_ex3.png)
-
-##### main 코드 branch로 가져오기
-```bash
-
-$ git pull origin main
-```
-
-#### vscode실행
-```bash
-
-$ code .
-```
+----
+## branch 정리
+`0.1.1`(민정) →  train 데이터 벡터화, tag
+`0.1.2`(수빈) → present 데이터 벡터화, tag
+`0.1.3`(민정) → model_test
