@@ -17,13 +17,23 @@
 `Data2_past_vector.csv` : 날짜 처리 및 시놉시스 벡터 컬럼 추가된 데이터\
 `Data3_vector_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터
 
+- **present_data**\
+`Data0_present.csv` : 원본 학습 데이터\
+`Data1_cleaned_present.csv` : train.csv의 특수문자 및 HTML 엔터티 코드 제거한 데이터\
+`Data2_present_vector.csv` : 날짜 처리 및 시놉시스 벡터 컬럼 추가된 데이터\
+`Data3_present_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터
+
 ### DATA_PREPROCESSING
 - **train_data_preprocessing**\
 `train_synopsis_vector.ipynb` : 날짜 처리 및 시놉시스 벡터화 코드\
 `train_tag.ipynb` : tag 3개 붙이는 코드
 
+- **present_data_preprocessing**\
+`present_synopsis_vector.ipynb` : 날짜 처리 및 시놉시스 벡터화 코드\
+`present_tag.ipynb` : tag 3개 붙이는 코드
 
 ### MODEL
+- **model_test**\
 `content_musical.ipynb` : 컨텐츠 기반 추천
 
 ----
