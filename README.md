@@ -18,9 +18,13 @@
 `Data3_vector_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터
 
 ### DATA_PREPROCESSING
-1. **벡터화** : `train_synopsis_vector.ipynb`, `present_synopsis_vector.ipynb` \
-3. **tag** : `train_tag`, `present_tag`\
-4. **추천** : `content_musical.ipynb`
+- **train_data_preprocessing**\
+`train_synopsis_vector.ipynb` : 날짜 처리 및 시놉시스 벡터화 코드\
+`train_tag.ipynb` : tag 3개 붙이는 코드
+
+
+### MODEL
+`content_musical.ipynb` : 컨텐츠 기반 추천
 
 ----
 ## branch
