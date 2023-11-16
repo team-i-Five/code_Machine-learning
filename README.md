@@ -10,7 +10,7 @@
 → 즉, train데이터와 present데이터 줄거리 간의 유사도를 측정해서 추천
 
 ### 2. 뮤지컬을 한 번 이상 본 사용자
-**1) 랭킹순으로 유명한 작품을 먼저 보여주고, 사용자가 봤던 작품 하나를 선택**
+**1) [랭킹순으로 유명한 작품 or 검색을 통한 작품]을 먼저 보여주고, 사용자가 봤던 작품 하나를 선택**
 
 **2) 선택한 작품과 유사도가 높은 현재 상영중인 작품(present) 추천**\
 → 즉, train데이터와 present데이터 줄거리 간의 유사도를 측정해서 추천
@@ -45,12 +45,11 @@
 
 ### MODEL
 - **model_test**\
-`content_musical.ipynb` : 컨텐츠 기반 추천
-
+`Knn_musical_v2.ipynb`\
+`SVD_musical.ipynb`
 ----
 ## branch
 `0.1.1`(민정) → train 데이터 벡터화, tag \
-`0.1.2`(수빈) → present 데이터 벡터화, tag \
-`0.1.3`(민정) → model_test \
-`0.1.4`(하현) → model_test \
-`0.2.0`(하현) → train(past) 데이터 및 presnet 데이터 mysql db에 insert
+`0.1.2`(수빈) → present 데이터 벡터화, tag / Knn_musical_v1 / fastapi \
+`0.1.3`(민정) → model_test / SVD_musical, Knn_musical_v2 \
+`0.2.0`(하현) → data_db
