@@ -51,4 +51,5 @@
 ## branch
 `0.1.1`(민정) → train 데이터 벡터화, tag \
 `0.1.2`(수빈) → present 데이터 벡터화, tag / Knn_musical_v1 \
-`0.1.3`(민정) → model_test / SVD_musical
+`0.1.3`(민정) → model_test / SVD_musical \
+`0.2.0`(하현) → data_db
