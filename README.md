@@ -45,8 +45,8 @@
 
 ### MODEL
 - **model_test**\
-`content_musical.ipynb` : 컨텐츠 기반 추천
-
+`Knn_musical_v2.ipynb`\
+`SVD_musical.ipynb`
 ----
 ## branch
 `0.1.1`(민정) → train 데이터 벡터화, tag \
