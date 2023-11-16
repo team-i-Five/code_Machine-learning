@@ -51,4 +51,6 @@
 ## branch
 `0.1.1`(민정) → train 데이터 벡터화, tag \
 `0.1.2`(수빈) → present 데이터 벡터화, tag \
-`0.1.3`(민정) → model_test
+`0.1.3`(민정) → model_test \
+`0.1.4`(하현) → model_test \
+`0.2.0`(하현) → train(past) 데이터 및 presnet 데이터 mysql db에 insert
