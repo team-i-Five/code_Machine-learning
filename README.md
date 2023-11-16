@@ -46,7 +46,8 @@
 ### MODEL
 - **model_test**\
 `Knn_musical_v2.ipynb`\
-`SVD_musical.ipynb`
+`SVD_musical.ipynb`\
+`NMF_musical.ipynb`
 ----
 ## branch
 `0.1.1`(민정) → train 데이터 벡터화, tag \
