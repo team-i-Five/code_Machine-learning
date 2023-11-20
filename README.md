@@ -31,7 +31,7 @@
 `Data1_cleaned_present.csv` : train.csv의 특수문자 및 HTML 엔터티 코드 제거한 데이터\
 `Data2_present_vector.csv` : 날짜 처리 및 시놉시스 벡터 컬럼 추가된 데이터\
 `Data3_present_tag.csv` : Data2_past_vector.csv에 tag 3개 붙인 데이터\
-`Data4_present_nan.csv` :  tag가 없는 값 모두 삭제, synopsis_numpy, synopsis_numpy_scale 컬럼 추가된 데이터(최종 완성된 데이터)\
+`Data4_present_nan.csv` :  tag가 없는 값 모두 삭제, synopsis_numpy, synopsis_numpy_scale 컬럼 추가된 데이터\
 `Data4.1_present_final.csv` : 'poster_url', 'date', 'actors'제외 전처리 → 최종데이터!!
 
 ### DATA_PREPROCESSING
