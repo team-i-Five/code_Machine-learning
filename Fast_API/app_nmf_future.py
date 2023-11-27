@@ -58,12 +58,9 @@ def recommend_impl(musical_id: int):
         # 선택한 작품의 인덱스 찾기
         selected_work_index_past = past_data[past_data['musical_id'] == musical_id].index
 
-        # 로그 추가
-        print(f"Debug: musical_id={musical_id}, selected_work_index_past={selected_work_index_past}")
-
         # 현재 작품 선택
         present_data['synopsis_numpy_scale'] = present_data['synopsis_numpy_scale'].apply(
-            lambda x: np.array(json.loads(x)))
+            lambda x: np.array(json.loads(x.decode('utf-8'))))
         scaler_present = StandardScaler()
         present_data_scaled = scaler_present.fit_transform(np.vstack(present_data['synopsis_numpy_scale']))
         present_data_scaled = present_data_scaled - np.min(present_data_scaled) + 1e-10
@@ -73,7 +70,7 @@ def recommend_impl(musical_id: int):
 
         # 미래 데이터 선택
         future_data['synopsis_numpy_scale'] = future_data['synopsis_numpy_scale'].apply(
-            lambda x: np.array(json.loads(x)))
+            lambda x: np.array(json.loads(x.decode('utf-8'))))
         scaler_future = StandardScaler()
         future_data_scaled = scaler_future.fit_transform(np.vstack(future_data['synopsis_numpy_scale']))
         future_data_scaled = future_data_scaled - np.min(future_data_scaled) + 1e-10
@@ -111,7 +108,7 @@ def recommend_impl(musical_id: int):
         similar_work_indices_future = similarities_future.argsort(axis=0)[::-1].flatten()
         top_n_future = min(5, len(similar_work_indices_future))
 
-        # 상위 N개의 유사한 작품에 대한 정보를 추출하고 결과 리스트에 추가 (현재 데이터)
+        # 현재 데이터에 대한 추천 결과
         present_result = []
         for i in range(top_n_present):
             index = similar_work_indices_present[i]
@@ -120,7 +117,7 @@ def recommend_impl(musical_id: int):
             musical_id = int(present_data.loc[index, 'musical_id'])
             present_result.append({"title": title, "musical_id": musical_id, "similarity": similarity})
 
-        # 상위 N개의 유사한 작품에 대한 정보를 추출하고 결과 리스트에 추가 (과거 데이터)
+        # 과거 데이터에 대한 추천 결과
         past_result = []
         for i in range(top_n_past):
             index = similar_work_indices_past[i]
@@ -129,7 +126,7 @@ def recommend_impl(musical_id: int):
             musical_id = int(past_data.loc[index, 'musical_id'])
             past_result.append({"title": title, "musical_id": musical_id, "similarity": similarity})
 
-        # 상위 N개의 유사한 작품에 대한 정보를 추출하고 결과 리스트에 추가 (미래 데이터)
+        # 미래 데이터에 대한 추천 결과
         future_result = []
         for i in range(top_n_future):
             index = similar_work_indices_future[i]
@@ -138,37 +135,31 @@ def recommend_impl(musical_id: int):
             musical_id = int(future_data.loc[index, 'musical_id'])
             future_result.append({"title": title, "musical_id": musical_id, "similarity": similarity})
 
-        # 현재, 과거, 미래 결과를 반환
         return {"present": present_result, "past": past_result, "future": future_result}
 
     except Exception as e:
         # 예외가 발생한 경우, 에러 응답을 반환
-        return {"error": f"An error occurred: {str(e)}"}
+        return JSONResponse(content={"error": f"An error occurred: {str(e)}"}, status_code=500)
+
 
 # FastAPI 엔드포인트에서 캐시를 사용하도록 수정
 @app_nmf.get("/recommend/{musical_id}")
-async def recommend(musical_id: int):
+async def recommend(musical_id: int, background_tasks: BackgroundTasks):
     try:
-        # 결과 반환
-        result = recommend_impl(musical_id)
+        # 캐시된 결과 확인
+        cached_result = recommend_impl(musical_id)
 
-        # JSON으로 직렬화 가능한 형태로 결과 가공
-        present_result = result.get("present", [])
-        past_result = result.get("past", [])
-        future_result = result.get("future", [])
-
-        present_result_json = json.dumps(present_result)
-        past_result_json = json.dumps(past_result)
-        future_result_json = json.dumps(future_result)
-
-        # 최종 결과 반환
-        return {
-            "result": {
-                "present": json.loads(present_result_json),
-                "past": json.loads(past_result_json),
-                "future": json.loads(future_result_json),
-            }
-        }
+        if cached_result is None:
+            # 결과가 캐시되어 있지 않으면 계산하고 캐시에 저장
+            background_tasks.add_task(recommend_impl, musical_id)
+            return {"message": "Task added to background. Please try again."}
+        else:
+            # 캐시된 결과 반환
+            return {"result": cached_result}
 
     except Exception as e:
-        return {"result": {"error": f"An error occurred: {str(e)}"}}
+        return {"error": f"An error occurred: {str(e)}"}
+
+
+# 실행방법 : uvicorn app_nmf:app_nmf --reload --host 0.0.0.0 --port 8080
+# 주소검색 : http://localhost:8080/recommend/{musical_id}
