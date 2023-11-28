@@ -56,6 +56,8 @@ def recommend_future(musical_id: int):
         # 미래 작품 선택
         future_data['synopsis_numpy_scale'] = future_data['synopsis_numpy_scale'].apply(lambda x: np.array(json.loads(x.decode('utf-8')) if isinstance(x, bytes) else x))
         scaler_future = StandardScaler()
+        # future_data_scaled = scaler_future.fit_transform(np.vstack(future_data['synopsis_numpy_scale']))에서는 future_data['synopsis_numpy_scale'] 열의 값을 수직으로 쌓아서 2차원 배열을 생성한 후, scaler_future.fit_transform을 사용하여 해당 데이터를 스케일링한 결과를 future_data_scaled에 저장
+        # 이는 주로 머신러닝 모델에 입력 데이터를 전처리하는 과정에서 사용
         future_data_scaled = scaler_future.fit_transform(np.vstack(future_data['synopsis_numpy_scale']))
         future_data_scaled = future_data_scaled - np.min(future_data_scaled) + 1e-10
 
