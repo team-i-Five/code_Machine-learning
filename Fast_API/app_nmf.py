@@ -50,6 +50,10 @@ def recommend(musical_id: int):
         scaler_present = StandardScaler()
         present_data_scaled = scaler_present.fit_transform(np.vstack(present_data['synopsis_numpy_scale']))
         present_data_scaled = present_data_scaled - np.min(present_data_scaled) + 1e-10
+        
+        # # 'list' 객체에 'tolist' 속성이 없는 경우를 고려하여 tolist 호출
+        # present_data['synopsis_numpy_scale'] = present_data['synopsis_numpy_scale'].apply(
+        # lambda x: x.tolist() if hasattr(x, 'tolist') else x)
 
         # NMF 모델 초기화
         # n_components: 추출할 특성의 수로, 작품을 나타내는 잠재적인 특징의 개수를 설정
@@ -101,5 +105,5 @@ def recommend(musical_id: int):
         # 예외가 발생한 경우, 에러 응답을 반환
         return JSONResponse(content={"error": f"An error occurred: {str(e)}"}, status_code=500)
     
-# 실행방법 : uvicorn app_nmf:app_nmf --reload --host 0.0.0.0 --port 8080
-# 주소검색 : http://localhost:8080/recommend/{musical_id}
+# 실행방법 : uvicorn app_nmf:app_nmf --reload --host 0.0.0.0 --port 8085
+# 주소검색 : http://localhost:8085/recommend/{musical_id}
