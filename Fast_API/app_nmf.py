@@ -7,6 +7,7 @@ from sklearn.decomposition import NMF
 from sklearn.metrics.pairwise import cosine_similarity
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+import joblib
 
 app_nmf = FastAPI()
 
@@ -43,6 +44,8 @@ print("First few values of 'synopsis_numpy_scale' in present_data:", present_dat
 @app_nmf.get("/{musical_id}")
 def recommend(musical_id: int):
     try:
+        loaded_nmf_present = joblib.load("npm_present_weights.joblib")
+        
         # 선택한 작품의 인덱스 찾기
         selected_work_index_past = past_data[past_data['musical_id'] == musical_id].index[0]
 
@@ -62,13 +65,16 @@ def recommend(musical_id: int):
         present_data['synopsis_numpy_scale'] = present_data['synopsis_numpy_scale'].apply(lambda x: x.tolist() if hasattr(x, 'tolist') else x if x is not None else [])
 
         # NMF 모델 초기화
-        nmf = NMF(n_components=10, init='random', random_state=42, max_iter=500)
+        nmf = loaded_nmf_present
 
         # 특성 행렬 생성
         V = np.vstack(past_data_scaled)
 
         # NMF 모델 훈련
         W = nmf.fit_transform(V)
+        
+        # NMF 모델을 파일에 저장
+        # joblib.dump(nmf, "npm_present_weights.joblib")
 
         # 현재 상영중인 데이터에 대한 특성 행렬 생성
         V_present = np.vstack(present_data_scaled)
