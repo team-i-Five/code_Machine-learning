@@ -32,14 +32,6 @@ future_data = pd.read_sql(future_sql, db)
 # MySQL 연결 닫기 (애플리케이션이 종료될 때)
 db.close()
 
-# 추가: 'synopsis_numpy_scale' 열의 데이터 타입 확인과 예시 값 출력
-print("Data type of 'synopsis_numpy_scale' in past_data:", past_data['synopsis_numpy_scale'].dtype)
-print("First few values of 'synopsis_numpy_scale' in past_data:", past_data['synopsis_numpy_scale'].head().tolist())
-
-# 추가: 'synopsis_numpy_scale' 열의 데이터 타입 확인과 예시 값 출력
-print("Data type of 'synopsis_numpy_scale' in future_data:", future_data['synopsis_numpy_scale'].dtype)
-print("First few values of 'synopsis_numpy_scale' in future_data:", future_data['synopsis_numpy_scale'].head().tolist())
-
 # 뮤지컬 추천을 위한 musical_id에 기반한 엔드포인트 정의
 @app_nmf_future.get("/{musical_id}")
 def recommend_future(musical_id: int):

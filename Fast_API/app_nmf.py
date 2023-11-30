@@ -32,14 +32,6 @@ present_data = pd.read_sql(present_sql, db)
 # MySQL 연결 닫기 (애플리케이션이 종료될 때)
 db.close()
 
-# 추가: 'synopsis_numpy_scale' 열의 데이터 타입 확인과 예시 값 출력
-print("Data type of 'synopsis_numpy_scale' in past_data:", past_data['synopsis_numpy_scale'].dtype)
-print("First few values of 'synopsis_numpy_scale' in past_data:", past_data['synopsis_numpy_scale'].head().tolist())
-
-# 추가: 'synopsis_numpy_scale' 열의 데이터 타입 확인과 예시 값 출력
-print("Data type of 'synopsis_numpy_scale' in present_data:", present_data['synopsis_numpy_scale'].dtype)
-print("First few values of 'synopsis_numpy_scale' in present_data:", present_data['synopsis_numpy_scale'].head().tolist())
-
 # 가중치 저장 모델 불러오기
 # 함수 밖에서 호출하는 이유
 # FastAPI 애플리케이션이 요청을 처리할 때마다 모델 구성 요소를 다시 불러오는 것을 피하기 위해서이다.
