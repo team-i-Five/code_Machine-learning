@@ -7,6 +7,7 @@ from sklearn.decomposition import NMF
 from sklearn.metrics.pairwise import cosine_similarity
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+import joblib
 
 app_nmf_future = FastAPI()
 
@@ -31,18 +32,13 @@ future_data = pd.read_sql(future_sql, db)
 # MySQL 연결 닫기 (애플리케이션이 종료될 때)
 db.close()
 
-# 추가: 'synopsis_numpy_scale' 열의 데이터 타입 확인과 예시 값 출력
-print("Data type of 'synopsis_numpy_scale' in past_data:", past_data['synopsis_numpy_scale'].dtype)
-print("First few values of 'synopsis_numpy_scale' in past_data:", past_data['synopsis_numpy_scale'].head().tolist())
-
-# 추가: 'synopsis_numpy_scale' 열의 데이터 타입 확인과 예시 값 출력
-print("Data type of 'synopsis_numpy_scale' in future_data:", future_data['synopsis_numpy_scale'].dtype)
-print("First few values of 'synopsis_numpy_scale' in future_data:", future_data['synopsis_numpy_scale'].head().tolist())
-
 # 뮤지컬 추천을 위한 musical_id에 기반한 엔드포인트 정의
 @app_nmf_future.get("/{musical_id}")
 def recommend_future(musical_id: int):
     try:
+        # 모델 불러오기
+        loaded_nmf = joblib.load("npm_future_weights.joblib")
+        
         # 선택한 작품의 인덱스 찾기
         selected_work_index_past = past_data[past_data['musical_id'] == musical_id].index[0]
 
@@ -52,12 +48,9 @@ def recommend_future(musical_id: int):
         past_data_scaled = scaler_past.fit_transform(np.vstack(past_data['synopsis_numpy_scale']))
         past_data_scaled = past_data_scaled - np.min(past_data_scaled) + 1e-10
 
-
         # 미래 작품 선택
         future_data['synopsis_numpy_scale'] = future_data['synopsis_numpy_scale'].apply(lambda x: np.array(json.loads(x.decode('utf-8')) if isinstance(x, bytes) else x))
         scaler_future = StandardScaler()
-        # future_data_scaled = scaler_future.fit_transform(np.vstack(future_data['synopsis_numpy_scale']))에서는 future_data['synopsis_numpy_scale'] 열의 값을 수직으로 쌓아서 2차원 배열을 생성한 후, scaler_future.fit_transform을 사용하여 해당 데이터를 스케일링한 결과를 future_data_scaled에 저장
-        # 이는 주로 머신러닝 모델에 입력 데이터를 전처리하는 과정에서 사용
         future_data_scaled = scaler_future.fit_transform(np.vstack(future_data['synopsis_numpy_scale']))
         future_data_scaled = future_data_scaled - np.min(future_data_scaled) + 1e-10
 
@@ -65,13 +58,17 @@ def recommend_future(musical_id: int):
         future_data['synopsis_numpy_scale'] = future_data['synopsis_numpy_scale'].apply(lambda x: x.tolist() if hasattr(x, 'tolist') else x if x is not None else [])
 
         # NMF 모델 초기화
-        nmf = NMF(n_components=10, init='random', random_state=42, max_iter=500)
+        # nmf = NMF(n_components=10, init='random', random_state=42, max_iter=500)
+        nmf = loaded_nmf  # 저장된 모델 불러오기
 
         # 특성 행렬 생성
         V = np.vstack(past_data_scaled)
 
         # NMF 모델 훈련
-        W = nmf.fit_transform(V)
+        W = nmf.transform(V)
+        
+        # NMF 모델 가중치 저장
+        # joblib.dump(nmf, "npm_future_weights.joblib")
 
         # 미래 상영중인 데이터에 대한 특성 행렬 생성
         V_future = np.vstack(future_data_scaled)

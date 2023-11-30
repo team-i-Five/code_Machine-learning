@@ -24,3 +24,5 @@ def use_app_nmf():
 def use_app_nmf_future():
     # app_nmf_future를 사용하여 무언가를 수행
     return {"message": "future"}
+
+# uvicorn main:app --reload --host 0.0.0.0 --port 8080

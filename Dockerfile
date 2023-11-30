@@ -20,4 +20,4 @@ EXPOSE 80
 
 
 # Run app_nmf.py when the container launches
-CMD ["uvicorn", "app_nmf:app_nmf", "--host", "0.0.0.0", "--port", "80", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
