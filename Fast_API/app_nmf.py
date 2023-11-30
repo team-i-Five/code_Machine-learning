@@ -75,6 +75,7 @@ def recommend(musical_id: int):
         # joblib.dump(nmf.components_, "npm_present_weights.joblib")
 
         # 현재 상영중인 데이터에 대한 특성 행렬 생성
+        # vstack: 1차원 배열을 2차원 배열로
         V_present = np.vstack(present_data_scaled)
 
         # NMF 모델을 사용하여 현재 상영중인 데이터의 특성 행렬 분해
@@ -85,6 +86,8 @@ def recommend(musical_id: int):
         similarities = cosine_similarity(W_present, selected_work)
 
         # 유사도가 높은 순서대로 정렬하여 유사한 작품 인덱스를 찾기
+        # argsort : 작은 값부터 큰 값 순서로 정렬한 경우의 인덱스를 반환
+        # flatten : 다차원 배열을 1차원 배열로 평탄화
         similar_work_indices = similarities.argsort(axis=0)[::-1].flatten()
         top_n = min(5, len(similar_work_indices))
 
